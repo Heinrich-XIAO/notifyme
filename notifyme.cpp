@@ -5,6 +5,7 @@
 #include <thread>
 #include <chrono>
 #include <fstream>
+#include <cstring>
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #elif defined(__linux__)
@@ -80,7 +81,20 @@ std::pair<std::string, std::string> checkCondition(std::string condition_file) {
 	return {title, content};
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+	if (argc != 1) {
+		if (argc == 3 && strcmp(argv[1], "add") == 0) {
+			std::ofstream file("conditions.txt", std::ios_base::app);
+			if (!file.is_open()) {
+				std::cerr << "Error: Could not open conditions.txt!" << std::endl;
+				return 1;
+			}
+			file << argv[2] << std::endl;
+			file.close();
+		}
+	}
+
+
 	std::ifstream file("conditions.txt");
 	if (!file.is_open()) {
 		std::cerr << "Error: Could not open conditions.txt!" << std::endl;
