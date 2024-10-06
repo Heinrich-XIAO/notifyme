@@ -91,6 +91,7 @@ int main(int argc, char *argv[]) {
 			}
 			file << argv[2] << std::endl;
 			file.close();
+			return 0;
 		}
 	}
 
